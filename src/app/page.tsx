@@ -6,11 +6,16 @@ import { TMDB_BASE_URL } from "~/lib/constants";
 import { getServerAuthSession } from "~/server/auth";
 import { type TrendingResponseType } from "~/types";
 
-async function getData() {
+async function getTrendingMovies() {
   try {
     const url = `${TMDB_BASE_URL}/movie/popular?api_key=${env.TMDB_API_KEY}`;
     const response = await fetch(url);
-    return (await response.json()) as TrendingResponseType;
+    const data = (await response.json()) as TrendingResponseType;
+    data.results = data.results.map((media) => ({
+      ...media,
+      media_type: "movie",
+    }));
+    return data;
   } catch (error) {
     console.error(error);
     return {
@@ -28,7 +33,7 @@ export default async function Home() {
     redirect("/api/auth/signin");
   }
 
-  const data = await getData();
+  const data = await getTrendingMovies();
 
   return (
     <main className="flex min-h-screen justify-center bg-background scrollbar-track-background">

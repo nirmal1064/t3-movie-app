@@ -37,8 +37,6 @@ export default async function Search({ searchParams }: Props) {
   const { q } = searchParams;
   const data = await searchMovies(q as string);
 
-  console.log(data.results[2]);
-
   return (
     <main className="flex min-h-screen justify-center bg-background scrollbar-track-background">
       <Navbar />

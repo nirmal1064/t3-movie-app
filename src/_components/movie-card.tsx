@@ -1,3 +1,4 @@
+"use client";
 import { type Media } from "@prisma/client";
 import Image from "next/image";
 import { AiFillLike, AiOutlineLike } from "react-icons/ai";
@@ -15,6 +16,30 @@ const watched = false;
 const watchList = false;
 
 export default function MovieCard({ media: movie }: Props) {
+  function handleLike() {
+    console.log("Handle Like");
+  }
+
+  function handleRemoveLike() {
+    console.log("Handle Remove Like");
+  }
+
+  function handleAddToList() {
+    console.log("Handle AddToList");
+  }
+
+  function handleRemoveFromList() {
+    console.log("Handle RemoveFromList");
+  }
+
+  function handleAddToWatchList() {
+    console.log("Handle AddToWatchList");
+  }
+
+  function handleRemoveFromWatchList() {
+    console.log("Handle RemoveFromWatchList");
+  }
+
   return (
     <div
       className={`flex h-auto w-[300px] flex-col gap-2 rounded-lg bg-movie shadow-2xl`}
@@ -37,7 +62,7 @@ export default function MovieCard({ media: movie }: Props) {
             {movie.release_date && `(${movie.release_date.slice(0, 4)})`}
           </h2>
         </div>
-        <p className="flex max-h-6 flex-wrap gap-1 overflow-hidden px-1">
+        <p className="flex flex-wrap gap-1 px-1">
           {movie.genre_ids?.slice(0, 3).map((genreId) => (
             <span
               key={genreId}
@@ -55,16 +80,26 @@ export default function MovieCard({ media: movie }: Props) {
           </button>
           <div className="flex gap-1.5">
             <div className="flex cursor-pointer items-center justify-center rounded-full border border-foreground p-1">
-              {liked ? <AiFillLike /> : <AiOutlineLike />}
+              {liked ? (
+                <AiFillLike onClick={handleRemoveLike} />
+              ) : (
+                <AiOutlineLike onClick={handleLike} />
+              )}
             </div>
             <div className="flex cursor-pointer items-center justify-center rounded-full border border-foreground p-1">
-              {watched ? <FaCheck /> : <FaPlus />}
+              {watched ? (
+                <FaCheck onClick={handleRemoveFromList} />
+              ) : (
+                <FaPlus onClick={handleAddToList} />
+              )}
             </div>
             <div className="flex cursor-pointer items-center justify-center rounded-full border border-foreground p-1">
               {watchList ? (
-                <MdOutlinePlaylistAddCheck />
+                <MdOutlinePlaylistAddCheck
+                  onClick={handleRemoveFromWatchList}
+                />
               ) : (
-                <MdOutlinePlaylistAdd />
+                <MdOutlinePlaylistAdd onClick={handleAddToWatchList} />
               )}
             </div>
           </div>
