@@ -1,7 +1,7 @@
 "use client";
 import { Clapperboard, Search } from "lucide-react";
 import { useSession } from "next-auth/react";
-import { FormEvent, useMemo, useState } from "react";
+import { type FormEvent, useMemo, useState } from "react";
 import { Input } from "~/components/ui/input";
 import { AUTH_NAV_ITEMS, DEFAULT_NAV_ITEMS } from "~/lib/constants";
 import NavItem from "./NavItem";
@@ -30,12 +30,16 @@ export default function Navbar() {
 
   return (
     <nav
-      className={`fixed left-0 top-0 z-50 w-full bg-background px-20 shadow-md md:px-24`}
+      className={`fixed left-0 top-0 z-50 w-full bg-background px-4 shadow-md md:px-24`}
     >
       <div className="flex items-center justify-between p-2 px-4 md:gap-1 md:px-10">
         <div className="flex cursor-pointer items-center justify-center gap-1 text-2xl">
           <Clapperboard color="red" />
-          <h1 className="text-red-500">MovieFlix</h1>
+          <h1
+            className={`${toogleSearchBox && "hidden"} text-red-500 md:block`}
+          >
+            MovieFlix
+          </h1>
         </div>
         {!toogleSearchBox && (
           <div className="flex items-center gap-4">
