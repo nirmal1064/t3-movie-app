@@ -145,3 +145,23 @@ export const TV_GENERES = [
     name: "Western",
   },
 ];
+
+export const NAV_ITEMS = [
+  { label: "Trending", href: "/trending" },
+  { label: "Popular", href: "/popular" },
+  { label: "My List", href: "/mylist" },
+  { label: "Watch List", href: "/watchlist" },
+  { label: "Favorites", href: "/favorites" },
+];
+
+export const DEFAULT_NAV_ITEMS = [
+  { label: "Trending", href: "/trending" },
+  { label: "Popular", href: "/popular" },
+];
+
+export const AUTH_NAV_ITEMS = [
+  ...DEFAULT_NAV_ITEMS,
+  { label: "My List", href: "/mylist" },
+  { label: "Watch List", href: "/watchlist" },
+  { label: "Favorites", href: "/favorites" },
+];

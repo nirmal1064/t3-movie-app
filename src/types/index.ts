@@ -1,6 +1,15 @@
+import { type Media } from "@prisma/client";
+
 export type TrendingResponseType = {
   page: number;
-  results: TrendingType[];
+  results: Media[];
+  total_pages: number;
+  total_results: number;
+};
+
+export type SearchResultType = {
+  page: number;
+  results: Media[];
   total_pages: number;
   total_results: number;
 };

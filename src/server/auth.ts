@@ -5,9 +5,11 @@ import {
   type NextAuthOptions,
 } from "next-auth";
 import DiscordProvider from "next-auth/providers/discord";
+import CredentialsProvider from "next-auth/providers/credentials";
 
 import { env } from "~/env";
 import { db } from "~/server/db";
+import { loginUser } from "./user-auth";
 
 /**
  * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`
@@ -37,19 +39,57 @@ declare module "next-auth" {
  */
 export const authOptions: NextAuthOptions = {
   callbacks: {
-    session: ({ session, user }) => ({
-      ...session,
-      user: {
-        ...session.user,
-        id: user.id,
-      },
-    }),
+    // session: ({ session, user }) => ({
+    //   ...session,
+    //   user: {
+    //     ...session.user,
+    //     id: user.id,
+    //   },
+    // }),
+    session({ session, token }) {
+      if (token.sub) {
+        session.user.id = token.sub;
+      }
+      if (token.id) {
+        session.user.id = token.id as string;
+      }
+      return session;
+    },
+    jwt({ token, user }) {
+      if (user) {
+        token.id = user.id;
+      }
+      return token;
+    },
   },
+  session: { strategy: "jwt" },
   adapter: PrismaAdapter(db),
   providers: [
     DiscordProvider({
       clientId: env.DISCORD_CLIENT_ID,
       clientSecret: env.DISCORD_CLIENT_SECRET,
+    }),
+    CredentialsProvider({
+      name: "Credentials",
+      authorize: async (credentials) => {
+        const email = credentials?.email;
+        const password = credentials?.password;
+        const input = { email: email!, password: password! };
+        const user = await loginUser({ db, input });
+        console.log(user);
+        return user;
+      },
+      credentials: {
+        email: {
+          label: "Email",
+          type: "email",
+          placeholder: "johndoe@gmail.com",
+        },
+        password: {
+          label: "Password",
+          type: "password",
+        },
+      },
     }),
     /**
      * ...add more providers here.
@@ -61,6 +101,8 @@ export const authOptions: NextAuthOptions = {
      * @see https://next-auth.js.org/providers/github
      */
   ],
+  secret: env.NEXTAUTH_SECRET,
+  debug: env.NODE_ENV === "development",
 };
 
 /**
