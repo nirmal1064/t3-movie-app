@@ -5,6 +5,30 @@ generator client {
     provider = "prisma-client-js"
 }
 
+// generator zod {
+//     provider = "zod-prisma"
+//     output   = "../src/types/prisma"
+// }
+
+generator zod {
+    provider                         = "zod-prisma-types"
+    // output                           = "../src/types/zod-prisma-types"
+    useMultipleFiles                 = false
+    writeBarrelFiles                 = true
+    createModelTypes                 = true
+    createInputTypes                 = true // default is true
+    addInputTypeValidation           = false // default is true
+    addIncludeType                   = false // default is true
+    addSelectType                    = false // default is true
+    validateWhereUniqueInput         = false // default is true
+    createOptionalDefaultValuesTypes = true // default is false
+    createRelationValuesTypes        = false // default is false
+    createPartialTypes               = true // default is false
+    // useDefaultValidators             = false // default is true
+    // coerceDate                       = false // default is true
+    writeNullishInModelTypes         = true // default is false
+}
+
 datasource db {
     provider = "mongodb"
     // NOTE: When using mysql or sqlserver, uncomment the @db.Text annotations in model Account below
@@ -50,22 +74,13 @@ model User {
     image         String?
     accounts      Account[]
     sessions      Session[]
-    mylist        Media[]   @relation("mylistRelation")
-    watchList     Media[]   @relation("watchlistRelation")
-    favorites     Media[]   @relation("favoritesRelation")
-}
-
-model VerificationToken {
-    id         String   @id @default(auto()) @map("_id") @db.ObjectId
-    identifier String
-    token      String   @unique
-    expires    DateTime
-
-    @@unique([identifier, token])
+    mylistIds     Int[]     @db.Int
+    watchListIds  Int[]     @db.Int
+    favoriteIds   Int[]     @db.Int
 }
 
 model Media {
-    id                 Int      @id @map("_id")
+    id                 Int      @id @map("_id") @db.Int
     title              String?
     name               String?
     poster_path        String?
@@ -91,7 +106,7 @@ model Media {
     images             Json?
     videos             Json?
     tagline            String?
-    genres             Json?
+    // genres             Json?
     original_name      String?
     // languages          Json?
     // in_production      Boolean?
@@ -106,8 +121,13 @@ model Media {
     // networks             Json?
     // next_episode_to_air  Json?
     // last_episode_to_air  Json?
-    userMyList         User?    @relation("mylistRelation", fields: [userId], references: [id])
-    userId             String?  @db.ObjectId
-    userWatchList      User?    @relation("watchlistRelation", fields: [userId], references: [id])
-    userFavorites      User?    @relation("favoritesRelation", fields: [userId], references: [id])
+}
+
+model VerificationToken {
+    id         String   @id @default(auto()) @map("_id") @db.ObjectId
+    identifier String
+    token      String   @unique
+    expires    DateTime
+
+    @@unique([identifier, token])
 }

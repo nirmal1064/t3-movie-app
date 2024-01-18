@@ -31,6 +31,10 @@ export const env = createEnv({
     DISCORD_CLIENT_ID: z.string(),
     DISCORD_CLIENT_SECRET: z.string(),
     TMDB_API_KEY: z.string(),
+    SKIP_ZOD_PRISMA:
+      process.env.NEXTAUTH_URL === "development"
+        ? z.string().optional()
+        : z.string(),
   },
 
   /**
@@ -54,6 +58,7 @@ export const env = createEnv({
     DISCORD_CLIENT_ID: process.env.DISCORD_CLIENT_ID,
     DISCORD_CLIENT_SECRET: process.env.DISCORD_CLIENT_SECRET,
     TMDB_API_KEY: process.env.TMDB_API_KEY,
+    SKIP_ZOD_PRISMA: process.env.SKIP_ZOD_PRISMA,
   },
   /**
    * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially

@@ -1,6 +1,7 @@
 "use client";
 import { type Media } from "@prisma/client";
 import Image from "next/image";
+import toast from "react-hot-toast";
 import { AiFillLike, AiOutlineLike } from "react-icons/ai";
 import { FaCheck, FaPlus } from "react-icons/fa6";
 import {
@@ -8,6 +9,7 @@ import {
   MdOutlinePlaylistAddCheck,
 } from "react-icons/md";
 import { IMAGE_BASE_URL, MOVIE_GENRES, TV_GENERES } from "~/lib/constants";
+import { api } from "~/trpc/react";
 
 type Props = { media: Media };
 
@@ -15,7 +17,9 @@ const liked = false;
 const watched = false;
 const watchList = false;
 
-export default function MovieCard({ media: movie }: Props) {
+export default function MovieCard({ media }: Props) {
+  const { mutate: addToListMutate } = api.media.addToList.useMutation();
+
   function handleLike() {
     console.log("Handle Like");
   }
@@ -26,6 +30,20 @@ export default function MovieCard({ media: movie }: Props) {
 
   function handleAddToList() {
     console.log("Handle AddToList");
+    console.log(media);
+    addToListMutate(
+      { media },
+      {
+        onSuccess: () => {
+          toast.success(
+            `${media.media_type === "tv" ? "Series" : "Movie"} added to your List`,
+          );
+        },
+        onError: () => {
+          toast.error("Some Error Occured");
+        },
+      },
+    );
   }
 
   function handleRemoveFromList() {
@@ -46,8 +64,8 @@ export default function MovieCard({ media: movie }: Props) {
     >
       <Image
         className="rounded-lg object-cover transition-all hover:scale-105"
-        src={`${IMAGE_BASE_URL}${movie?.poster_path ?? movie.backdrop_path}`}
-        alt={movie.original_title ?? movie.title ?? movie.name ?? ""}
+        src={`${IMAGE_BASE_URL}${media?.poster_path ?? media.backdrop_path}`}
+        alt={media.original_title ?? media.title ?? media.name ?? ""}
         priority
         width={300}
         height={450}
@@ -56,19 +74,19 @@ export default function MovieCard({ media: movie }: Props) {
         <div className="flex items-center gap-1">
           <h2
             className="line-clamp-1 cursor-default text-xl font-semibold"
-            title={movie.title ?? movie.name ?? undefined}
+            title={media.title ?? media.name ?? undefined}
           >
-            {movie.title ?? movie.name}{" "}
-            {movie.release_date && `(${movie.release_date.slice(0, 4)})`}
+            {media.title ?? media.name}{" "}
+            {media.release_date && `(${media.release_date.slice(0, 4)})`}
           </h2>
         </div>
         <p className="flex flex-wrap gap-1 px-1">
-          {movie.genre_ids?.slice(0, 3).map((genreId) => (
+          {media.genre_ids?.slice(0, 3).map((genreId) => (
             <span
               key={genreId}
               className="rounded-sm bg-purple-500 px-1 py-0.5 text-sm"
             >
-              {movie.media_type === "movie"
+              {media.media_type === "movie"
                 ? MOVIE_GENRES.find((genre) => genre.id === genreId)?.name
                 : TV_GENERES.find((genre) => genre.id === genreId)?.name}
             </span>
