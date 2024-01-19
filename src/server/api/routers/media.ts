@@ -1,5 +1,5 @@
-import { MediaCreateInputSchema } from "prisma/generated/zod";
 import { z } from "zod";
+import { MediaCreateInputSchema } from "~/types/prismainput";
 import { createTRPCRouter, protectedProcedure } from "../trpc";
 
 const addToListSchema = z.object({ media: MediaCreateInputSchema });

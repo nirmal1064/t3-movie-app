@@ -29,8 +29,6 @@ export default function MovieCard({ media }: Props) {
   }
 
   function handleAddToList() {
-    console.log("Handle AddToList");
-    console.log(media);
     addToListMutate(
       { media },
       {
@@ -60,14 +58,14 @@ export default function MovieCard({ media }: Props) {
 
   return (
     <div
-      className={`flex h-auto w-[300px] flex-col gap-2 rounded-lg bg-movie shadow-2xl`}
+      className={`flex h-auto w-[320px] flex-col gap-2 rounded-lg bg-movie shadow-2xl`}
     >
       <Image
         className="rounded-lg object-cover transition-all hover:scale-105"
         src={`${IMAGE_BASE_URL}${media?.poster_path ?? media.backdrop_path}`}
         alt={media.original_title ?? media.title ?? media.name ?? ""}
         priority
-        width={300}
+        width={320}
         height={450}
       />
       <div className="flex h-full flex-col justify-between gap-1 pb-1 text-foreground">

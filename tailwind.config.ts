@@ -80,6 +80,9 @@ const config = {
         "accordion-up": "accordion-up 0.2s ease-out",
       },
     },
+    gridTemplateColumns: {
+      auto: "repeat(auto-fit, minmax(320px, 1fr))",
+    },
   },
   plugins: [
     require("tailwindcss-animate"),
