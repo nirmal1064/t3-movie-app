@@ -1,3 +1,15 @@
-export default function watchList() {
-  return <div>watchList</div>;
+import { type Media } from "@prisma/client";
+import Navbar from "~/_components/Navbar";
+import MovieGrid from "~/_components/movie/movie-grid";
+import { api } from "~/trpc/server";
+
+export default async function WatchList() {
+  const media = (await api.media.getWatchList.query()) as Media[];
+
+  return (
+    <main className="min-h-screen justify-center bg-background scrollbar-track-background">
+      <Navbar />
+      <MovieGrid media={media} />
+    </main>
+  );
 }
