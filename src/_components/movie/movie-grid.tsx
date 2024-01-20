@@ -16,6 +16,11 @@ export default async function MovieGrid({ media }: Props) {
         {media.map((movie) => (
           <MovieCard key={movie.id} media={movie} />
         ))}
+        {media.length === 0 && (
+          <div className="flex items-center justify-center text-xl">
+            Nothing Found Here
+          </div>
+        )}
       </section>
     );
   }
