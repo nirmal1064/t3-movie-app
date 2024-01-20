@@ -9,56 +9,191 @@ import {
   MdOutlinePlaylistAddCheck,
 } from "react-icons/md";
 import { IMAGE_BASE_URL, MOVIE_GENRES, TV_GENERES } from "~/lib/constants";
+import { useListIds } from "~/providers/media-provider";
 import { api } from "~/trpc/react";
 
 type Props = { media: Media };
 
-const liked = false;
-const watched = false;
-const watchList = false;
-
 export default function MovieCard({ media }: Props) {
-  const { mutate: addToListMutate } = api.media.addToList.useMutation();
+  const [listIds, setListIds] = useListIds();
+  const { mutate: addToListMutate } = api.media.addToMyList.useMutation();
+  const { mutate: watchListMutate } = api.media.addToWatchList.useMutation();
+  const { mutate: favoritesMutate } = api.media.addToFavorites.useMutation();
+  const { mutate: removeMyListMutate } =
+    api.media.removeFromMyList.useMutation();
+  const { mutate: removeWatchListMutate } =
+    api.media.removeFromWatchList.useMutation();
+  const { mutate: removeFavoriteMutate } =
+    api.media.removeFromFavorites.useMutation();
 
   function handleLike() {
-    console.log("Handle Like");
+    favoritesMutate(
+      { media },
+      {
+        onSuccess: (mediaId) => {
+          if (mediaId) {
+            setListIds((prevState) => ({
+              ...prevState,
+              favoriteIds: [...prevState.favoriteIds, mediaId],
+            }));
+            toast.success(
+              `${media.media_type === "tv" ? "Series" : "Movie"} added to your Favorites`,
+            );
+          }
+        },
+        onError: (error) => {
+          const code = error.data?.code;
+          if (code === "CONFLICT" || code === "INTERNAL_SERVER_ERROR") {
+            toast.error(error.message);
+          } else {
+            toast.error("Some Error Occured. Please Try Again");
+          }
+        },
+      },
+    );
   }
 
   function handleRemoveLike() {
-    console.log("Handle Remove Like");
+    removeFavoriteMutate(
+      { mediaId: media.id },
+      {
+        onSuccess: (mediaId) => {
+          if (mediaId) {
+            setListIds((prevState) => ({
+              ...prevState,
+              favoriteIds: prevState.favoriteIds.filter((id) => id !== mediaId),
+            }));
+          }
+          toast.success(
+            `${media.media_type === "tv" ? "Series" : "Movie"} Removed From your Favorites`,
+          );
+        },
+        onError: (error) => {
+          const code = error.data?.code;
+          if (code === "CONFLICT" || code === "INTERNAL_SERVER_ERROR") {
+            toast.error(error.message);
+          } else {
+            toast.error("Some Error Occured. Please Try Again");
+          }
+        },
+      },
+    );
   }
 
   function handleAddToList() {
     addToListMutate(
       { media },
       {
-        onSuccess: () => {
+        onSuccess: (mediaId) => {
+          if (mediaId) {
+            setListIds((prevState) => ({
+              ...prevState,
+              mylistIds: [...prevState.mylistIds, mediaId],
+            }));
+          }
+
           toast.success(
             `${media.media_type === "tv" ? "Series" : "Movie"} added to your List`,
           );
         },
-        onError: () => {
-          toast.error("Some Error Occured");
+        onError: (error) => {
+          const code = error.data?.code;
+          if (code === "CONFLICT" || code === "INTERNAL_SERVER_ERROR") {
+            toast.error(error.message);
+          } else {
+            toast.error("Some Error Occured. Please Try Again");
+          }
         },
       },
     );
   }
 
   function handleRemoveFromList() {
-    console.log("Handle RemoveFromList");
+    removeMyListMutate(
+      { mediaId: media.id },
+      {
+        onSuccess: (mediaId) => {
+          if (mediaId) {
+            setListIds((prevState) => ({
+              ...prevState,
+              mylistIds: prevState.mylistIds.filter((id) => id !== mediaId),
+            }));
+          }
+          toast.success(
+            `${media.media_type === "tv" ? "Series" : "Movie"} Removed From your List`,
+          );
+        },
+        onError: (error) => {
+          const code = error.data?.code;
+          if (code === "CONFLICT" || code === "INTERNAL_SERVER_ERROR") {
+            toast.error(error.message);
+          } else {
+            toast.error("Some Error Occured. Please Try Again");
+          }
+        },
+      },
+    );
   }
 
   function handleAddToWatchList() {
-    console.log("Handle AddToWatchList");
+    watchListMutate(
+      { media },
+      {
+        onSuccess: (mediaId) => {
+          if (mediaId) {
+            setListIds((prevState) => ({
+              ...prevState,
+              watchListIds: [...prevState.watchListIds, mediaId],
+            }));
+          }
+          toast.success(
+            `${media.media_type === "tv" ? "Series" : "Movie"} added to your Watch List`,
+          );
+        },
+        onError: (error) => {
+          const code = error.data?.code;
+          if (code === "CONFLICT" || code === "INTERNAL_SERVER_ERROR") {
+            toast.error(error.message);
+          } else {
+            toast.error("Some Error Occured. Please Try Again");
+          }
+        },
+      },
+    );
   }
 
   function handleRemoveFromWatchList() {
-    console.log("Handle RemoveFromWatchList");
+    removeWatchListMutate(
+      { mediaId: media.id },
+      {
+        onSuccess: (mediaId) => {
+          if (mediaId) {
+            setListIds((prevState) => ({
+              ...prevState,
+              watchListIds: prevState.watchListIds.filter(
+                (id) => id !== mediaId,
+              ),
+            }));
+          }
+          toast.success(
+            `${media.media_type === "tv" ? "Series" : "Movie"} Removed From Watch List`,
+          );
+        },
+        onError: (error) => {
+          const code = error.data?.code;
+          if (code === "CONFLICT" || code === "INTERNAL_SERVER_ERROR") {
+            toast.error(error.message);
+          } else {
+            toast.error("Some Error Occured. Please Try Again");
+          }
+        },
+      },
+    );
   }
 
   return (
     <div
-      className={`flex h-auto w-[320px] flex-col gap-2 rounded-lg bg-movie shadow-2xl`}
+      className={`flex h-auto w-[320px] select-none flex-col gap-2 rounded-lg bg-movie shadow-2xl`}
     >
       <Image
         className="rounded-lg object-cover transition-all hover:scale-105"
@@ -71,7 +206,7 @@ export default function MovieCard({ media }: Props) {
       <div className="flex h-full flex-col justify-between gap-1 pb-1 text-foreground">
         <div className="flex items-center gap-1">
           <h2
-            className="line-clamp-1 cursor-default text-xl font-semibold"
+            className="line-clamp-1 cursor-default px-1 text-xl font-semibold"
             title={media.title ?? media.name ?? undefined}
           >
             {media.title ?? media.name}{" "}
@@ -96,21 +231,21 @@ export default function MovieCard({ media }: Props) {
           </button>
           <div className="flex gap-1.5">
             <div className="flex cursor-pointer items-center justify-center rounded-full border border-foreground p-1">
-              {liked ? (
+              {listIds.favoriteIds.includes(media.id) ? (
                 <AiFillLike onClick={handleRemoveLike} />
               ) : (
                 <AiOutlineLike onClick={handleLike} />
               )}
             </div>
             <div className="flex cursor-pointer items-center justify-center rounded-full border border-foreground p-1">
-              {watched ? (
+              {listIds.mylistIds.includes(media.id) ? (
                 <FaCheck onClick={handleRemoveFromList} />
               ) : (
                 <FaPlus onClick={handleAddToList} />
               )}
             </div>
             <div className="flex cursor-pointer items-center justify-center rounded-full border border-foreground p-1">
-              {watchList ? (
+              {listIds.watchListIds.includes(media.id) ? (
                 <MdOutlinePlaylistAddCheck
                   onClick={handleRemoveFromWatchList}
                 />

@@ -5,9 +5,9 @@ import { cookies } from "next/headers";
 
 import { cn } from "~/lib/utils";
 import NextAuthProvider from "~/providers/session-provider";
-import { ThemeProvider } from "~/providers/theme-provider";
-import { TRPCReactProvider } from "~/trpc/react";
+import ThemeProvider from "~/providers/theme-provider";
 import ToastProvider from "~/providers/toast-provider";
+import { TRPCReactProvider } from "~/trpc/react";
 
 const inter = Inter({
   subsets: ["latin"],

@@ -35,7 +35,7 @@ export default async function Search({ searchParams }: Props) {
   return (
     <main className="flex min-h-screen justify-center bg-background scrollbar-track-background">
       <Navbar />
-      <MovieGrid medias={data.results} />
+      <MovieGrid media={data.results} />
     </main>
   );
 }

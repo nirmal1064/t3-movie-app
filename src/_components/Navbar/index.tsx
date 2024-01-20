@@ -92,6 +92,7 @@ export default function Navbar() {
           )}
         </div>
       </nav>
+
       {/* {Bottom Mobile Navigation Bar} */}
       <nav className="fixed bottom-0 left-0 z-50 w-full bg-background md:hidden">
         <ul className="flex w-full items-center justify-center gap-4 pb-0.5 pt-3 text-lg text-foreground">

@@ -63,7 +63,7 @@ export default function Auth() {
           </CardDescription>
         </CardHeader>
         <CardContent className="grid gap-4">
-          <div className="grid grid-cols-2 gap-6">
+          <div className="grid-cols-2 grid gap-6">
             <Button variant="outline" className="flex gap-2">
               <FaGithub className="h-4 w-4" />
               Github

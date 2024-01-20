@@ -1,9 +1,19 @@
-"use client";
-import { MoonStar, Sun } from "lucide-react";
+// "use client";
+import { Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
+import { useEffect, useState } from "react";
 
 export function ThemeIcon() {
+  const [mounted, setMounted] = useState(false);
   const { theme, setTheme } = useTheme();
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) {
+    return null;
+  }
 
   return (
     <span
@@ -13,7 +23,7 @@ export function ThemeIcon() {
       {theme === "dark" ? (
         <Sun onClick={() => setTheme("light")} />
       ) : (
-        <MoonStar onClick={() => setTheme("dark")} />
+        <Moon onClick={() => setTheme("dark")} />
       )}
     </span>
   );

@@ -38,7 +38,7 @@ export default async function Home() {
   return (
     <main className="container min-h-screen bg-background scrollbar-track-background">
       <Navbar />
-      <MovieGrid medias={data.results} />
+      <MovieGrid media={data.results} />
     </main>
   );
 }

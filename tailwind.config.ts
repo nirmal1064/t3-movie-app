@@ -82,6 +82,8 @@ const config = {
     },
     gridTemplateColumns: {
       auto: "repeat(auto-fit, minmax(320px, 1fr))",
+      // auto: "repeat(auto-fit, 320px)",
+      // auto: "repeat(auto-fit, 320px)",
     },
   },
   plugins: [
