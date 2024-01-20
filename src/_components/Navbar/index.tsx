@@ -1,24 +1,24 @@
 "use client";
-import { Clapperboard, Flame, Home, Search } from "lucide-react";
-import { useSession } from "next-auth/react";
+import { Clapperboard, Flame, Heart, LogOut, Search } from "lucide-react";
+import { signOut, useSession } from "next-auth/react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useMemo, useState, type FormEvent } from "react";
-import { MdLibraryAddCheck, MdWatchLater } from "react-icons/md";
+import { MdOutlineLibraryAddCheck, MdOutlineWatchLater } from "react-icons/md";
 import { Input } from "~/components/ui/input";
 import { AUTH_NAV_ITEMS, DEFAULT_NAV_ITEMS } from "~/lib/constants";
 import NavItem from "./NavItem";
-import { ModeToggle } from "./theme-toggle";
-import Link from "next/link";
+import { ThemeIcon } from "./icons";
 
 export default function Navbar() {
-  const [toogleSearchBox, setToogleSearchBox] = useState(false);
-  const [searchValue, setSearchValue] = useState("");
   const session = useSession();
   const navItems = useMemo(
     () =>
       session.status === "authenticated" ? AUTH_NAV_ITEMS : DEFAULT_NAV_ITEMS,
     [session.status],
   );
+  const [toogleSearchBox, setToogleSearchBox] = useState(false);
+  const [searchValue, setSearchValue] = useState("");
   const router = useRouter();
 
   function handleSearch(e: FormEvent<HTMLFormElement>) {
@@ -55,9 +55,18 @@ export default function Navbar() {
                   />
                 ))}
               </ul>
-              <ModeToggle />
-              <span className="cursor-pointer text-lg text-foreground">
+              <ThemeIcon />
+              <span
+                className="ml-[-2] cursor-pointer text-lg text-foreground"
+                title="Search"
+              >
                 <Search onClick={() => setToogleSearchBox(true)} />
+              </span>
+              <span
+                className="cursor-pointer text-lg text-foreground"
+                title="Logout"
+              >
+                <LogOut onClick={() => signOut({ callbackUrl: "/" })} />
               </span>
             </div>
           )}
@@ -91,17 +100,17 @@ export default function Navbar() {
               href={"/"}
               className="flex flex-col items-center justify-center"
             >
-              <Home className="h-6 w-6" />
-              <span>Home</span>
+              <Flame className="h-6 w-6" />
+              <span>Trending</span>
             </Link>
           </li>
           <li>
             <Link
-              href={"/"}
+              href={"/favorites"}
               className="flex flex-col items-center justify-center"
             >
-              <Flame className="h-6 w-6" />
-              <span>Trending</span>
+              <Heart className="h-6 w-6" />
+              <span>Favorites</span>
             </Link>
           </li>
           <li>
@@ -109,7 +118,7 @@ export default function Navbar() {
               href={"/watchlist"}
               className="flex flex-col items-center justify-center"
             >
-              <MdWatchLater className="h-6 w-6" />
+              <MdOutlineWatchLater className="h-6 w-6" />
               <span>WatchList</span>
             </Link>
           </li>
@@ -118,7 +127,7 @@ export default function Navbar() {
               href={"/mylist"}
               className="flex flex-col items-center justify-center"
             >
-              <MdLibraryAddCheck className="h-6 w-6" />
+              <MdOutlineLibraryAddCheck className="h-6 w-6" />
               <span>My List</span>
             </Link>
           </li>
