@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { useMemo, useState, type FormEvent } from "react";
 import { MdOutlineLibraryAddCheck, MdOutlineWatchLater } from "react-icons/md";
 import { Input } from "~/components/ui/input";
-import { AUTH_NAV_ITEMS, DEFAULT_NAV_ITEMS } from "~/lib/constants";
+import { AUTH_NAV_ITEMS, DEFAULT_NAV_ITEMS, ROUTES } from "~/lib/constants";
 import NavItem from "./NavItem";
 import { ThemeIcon } from "./icons";
 
@@ -36,14 +36,16 @@ export default function Navbar() {
         className={`fixed left-0 top-0 z-50 mx-auto w-full bg-background px-4 shadow-md md:px-[90px]`}
       >
         <div className="flex items-center justify-between p-2 md:gap-1">
-          <div className="flex cursor-pointer items-center justify-center gap-1 text-2xl">
-            <Clapperboard color="red" />
-            <h1
-              className={`${toogleSearchBox && "hidden"} text-red-500 md:block`}
-            >
-              MovieFlix
-            </h1>
-          </div>
+          <Link href={"/"}>
+            <div className="flex cursor-pointer items-center justify-center gap-1 text-2xl">
+              <Clapperboard color="red" />
+              <h1
+                className={`${toogleSearchBox && "hidden"} text-red-500 md:block`}
+              >
+                MovieFlix
+              </h1>
+            </div>
+          </Link>
           {!toogleSearchBox && (
             <div className="flex items-center gap-4">
               <ul className="hidden gap-4 text-lg text-foreground md:static md:flex md:items-center">
@@ -107,7 +109,7 @@ export default function Navbar() {
           </li>
           <li>
             <Link
-              href={"/favorites"}
+              href={ROUTES.FAVORITES}
               className="flex flex-col items-center justify-center"
             >
               <Heart className="h-6 w-6" />
@@ -116,7 +118,7 @@ export default function Navbar() {
           </li>
           <li>
             <Link
-              href={"/watchlist"}
+              href={ROUTES.WATCH_LIST}
               className="flex flex-col items-center justify-center"
             >
               <MdOutlineWatchLater className="h-6 w-6" />
@@ -125,8 +127,8 @@ export default function Navbar() {
           </li>
           <li>
             <Link
-              href={"/mylist"}
-              className="flex flex-col items-center justify-center"
+              href={ROUTES.MY_LIST}
+              className="flex flex-col items-center justify-center "
             >
               <MdOutlineLibraryAddCheck className="h-6 w-6" />
               <span>My List</span>

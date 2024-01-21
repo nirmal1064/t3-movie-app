@@ -24,7 +24,7 @@ export const useListIds = () => {
 };
 
 export default function MediaProvider({ children, mediaIds }: Props) {
-  const [listIds, setListIds] = useState<ListIdsType>(mediaIds);
+  const [listIds, setListIds] = useListIdsState(mediaIds);
 
   return (
     <MediaContext.Provider value={[listIds, setListIds]}>

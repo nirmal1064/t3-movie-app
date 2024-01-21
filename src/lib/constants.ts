@@ -165,3 +165,12 @@ export const AUTH_NAV_ITEMS = [
   { label: "Watch List", href: "/watchlist" },
   { label: "Favorites", href: "/favorites" },
 ];
+
+/* Routes */
+
+export const ROUTES = {
+  ROOT: "/",
+  MY_LIST: "/mylist",
+  WATCH_LIST: "/watchlist",
+  FAVORITES: "/favorites",
+};

@@ -1,6 +1,7 @@
 "use client";
 import { type Media } from "@prisma/client";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 import toast from "react-hot-toast";
 import { AiFillLike, AiOutlineLike } from "react-icons/ai";
 import { FaCheck, FaPlus } from "react-icons/fa6";
@@ -8,7 +9,12 @@ import {
   MdOutlinePlaylistAdd,
   MdOutlinePlaylistAddCheck,
 } from "react-icons/md";
-import { IMAGE_BASE_URL, MOVIE_GENRES, TV_GENERES } from "~/lib/constants";
+import {
+  IMAGE_BASE_URL,
+  MOVIE_GENRES,
+  ROUTES,
+  TV_GENERES,
+} from "~/lib/constants";
 import { useListIds } from "~/providers/media-provider";
 import { api } from "~/trpc/react";
 
@@ -25,6 +31,10 @@ export default function MovieCard({ media }: Props) {
     api.media.removeFromWatchList.useMutation();
   const { mutate: removeFavoriteMutate } =
     api.media.removeFromFavorites.useMutation();
+  const isFavorite = listIds.favoriteIds.includes(media.id);
+  const isInMyList = listIds.mylistIds.includes(media.id);
+  const isInWatchList = listIds.watchListIds.includes(media.id);
+  const pathname = usePathname();
 
   function handleLike() {
     favoritesMutate(
@@ -191,6 +201,18 @@ export default function MovieCard({ media }: Props) {
     );
   }
 
+  if (pathname === ROUTES.MY_LIST && !isInMyList) {
+    return null;
+  }
+
+  if (pathname === ROUTES.WATCH_LIST && !isInWatchList) {
+    return null;
+  }
+
+  if (pathname === ROUTES.FAVORITES && !isFavorite) {
+    return null;
+  }
+
   return (
     <div
       className={`flex h-auto w-[320px] select-none flex-col gap-2 rounded-lg bg-movie shadow-2xl`}
@@ -231,21 +253,21 @@ export default function MovieCard({ media }: Props) {
           </button>
           <div className="flex gap-1.5">
             <div className="flex cursor-pointer items-center justify-center rounded-full border border-foreground p-1">
-              {listIds.favoriteIds.includes(media.id) ? (
+              {isFavorite ? (
                 <AiFillLike onClick={handleRemoveLike} />
               ) : (
                 <AiOutlineLike onClick={handleLike} />
               )}
             </div>
             <div className="flex cursor-pointer items-center justify-center rounded-full border border-foreground p-1">
-              {listIds.mylistIds.includes(media.id) ? (
+              {isInMyList ? (
                 <FaCheck onClick={handleRemoveFromList} />
               ) : (
                 <FaPlus onClick={handleAddToList} />
               )}
             </div>
             <div className="flex cursor-pointer items-center justify-center rounded-full border border-foreground p-1">
-              {listIds.watchListIds.includes(media.id) ? (
+              {isInWatchList ? (
                 <MdOutlinePlaylistAddCheck
                   onClick={handleRemoveFromWatchList}
                 />

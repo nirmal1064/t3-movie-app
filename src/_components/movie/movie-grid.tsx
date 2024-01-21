@@ -26,6 +26,7 @@ export default async function MovieGrid({ media }: Props) {
   }
 
   if (!session?.user) {
+    console.log("No User");
     return <Grid />;
   }
 
