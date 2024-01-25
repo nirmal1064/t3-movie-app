@@ -106,7 +106,7 @@ export default async function MovieDetail({ media }: Props) {
                 </span>
               </p>
             )}
-            {media.credits?.cast && (
+            {media.credits?.cast && media.credits.cast.length > 0 && (
               <p>
                 <span className="text-muted-foreground">{"Actors: "}</span>
                 <span>
@@ -116,7 +116,7 @@ export default async function MovieDetail({ media }: Props) {
                 </span>
               </p>
             )}
-            {media.credits?.crew && (
+            {media.credits?.crew && media.credits.crew.length > 0 && (
               <p>
                 <span className="text-muted-foreground">{"Director(s): "}</span>
                 <span>

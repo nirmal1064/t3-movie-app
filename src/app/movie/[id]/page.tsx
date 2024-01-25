@@ -1,3 +1,4 @@
+import { type Metadata } from "next";
 import Navbar from "~/_components/Navbar";
 import MovieDetail from "~/_components/movie/movie-detail";
 import { env } from "~/env";
@@ -7,6 +8,14 @@ import { type ApiErrorResponse, type TMDBApiMedia } from "~/types";
 type Props = { params: { id: string } };
 
 type ResponseType = { success: true; media: TMDBApiMedia } | { success: false };
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const data = await getMovieById(params.id);
+  if (data.success) {
+    return { title: data.media?.title ?? data.media?.name };
+  }
+  return { title: "Movie Not Found" };
+}
 
 async function getMovieById(id: string) {
   try {
