@@ -101,7 +101,7 @@ model Media {
     images             Json?
     videos             Json?
     tagline            String?
-    // genres             Json?
+    genres             Json?
     original_name      String?
     // languages          Json?
     // in_production      Boolean?

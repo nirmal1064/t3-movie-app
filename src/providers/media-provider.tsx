@@ -1,11 +1,6 @@
 "use client";
-import { createContext, useState, type ReactNode, useContext } from "react";
-
-type ListIdsType = {
-  favoriteIds: number[];
-  watchListIds: number[];
-  mylistIds: number[];
-};
+import { createContext, useContext, useState, type ReactNode } from "react";
+import { type ListIdsType } from "~/types";
 
 const useListIdsState = (initialTasks: ListIdsType) => useState(initialTasks);
 

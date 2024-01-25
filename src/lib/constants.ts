@@ -1,5 +1,6 @@
 export const IMAGE_BASE_URL = "https://image.tmdb.org/t/p/w500";
 export const TMDB_BASE_URL = "https://api.themoviedb.org/3";
+export const YT_WATCH_URL = "https://www.youtube.com/watch?v=";
 export const MOVIE_GENRES = [
   {
     id: 28,
@@ -167,10 +168,21 @@ export const AUTH_NAV_ITEMS = [
 ];
 
 /* Routes */
-
 export const ROUTES = {
   ROOT: "/",
   MY_LIST: "/mylist",
   WATCH_LIST: "/watchlist",
   FAVORITES: "/favorites",
 };
+
+// USD Format
+export const USD_FORMATTER = Intl.NumberFormat("en-US", {
+  style: "currency",
+  currency: "USD",
+  minimumFractionDigits: 0,
+});
+
+export const LIST_FORMATTER = new Intl.ListFormat("en", {
+  style: "long",
+  type: "unit",
+});

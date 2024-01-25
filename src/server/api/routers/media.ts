@@ -11,15 +11,9 @@ import {
 } from "~/server/db-ops";
 import { createTRPCRouter, protectedProcedure } from "../trpc";
 
-const listInputSchema = z
-  .object({
-    idsOnly: z.boolean(),
-  })
-  .optional();
+const listInputSchema = z.object({ idsOnly: z.boolean() }).optional();
 
-const removeFromListSchema = z.object({
-  mediaId: z.number(),
-});
+const removeFromListSchema = z.object({ mediaId: z.number() });
 
 export const mediaRouter = createTRPCRouter({
   addToMyList: protectedProcedure

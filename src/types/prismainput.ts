@@ -49,6 +49,7 @@ export const MediaCreateInputSchema: z.ZodType<Prisma.MediaCreateInput> = z
     images: InputJsonValueSchema.optional().nullable(),
     videos: InputJsonValueSchema.optional().nullable(),
     tagline: z.string().optional().nullable(),
+    genres: InputJsonValueSchema.optional().nullable(),
     original_name: z.string().optional().nullable(),
   })
   .strict();

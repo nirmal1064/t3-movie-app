@@ -40,7 +40,7 @@ export default function Navbar() {
             <div className="flex cursor-pointer items-center justify-center gap-1 text-2xl">
               <Clapperboard color="red" />
               <h1
-                className={`${toogleSearchBox && "hidden"} text-red-500 md:block`}
+                className={`${toogleSearchBox && "hidden"} uppercase text-red-500 md:block`}
               >
                 MovieFlix
               </h1>

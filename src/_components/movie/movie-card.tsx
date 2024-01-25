@@ -3,13 +3,6 @@ import { type Media } from "@prisma/client";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import toast from "react-hot-toast";
-import { AiFillLike, AiOutlineLike } from "react-icons/ai";
-import { FaCheck, FaPlus } from "react-icons/fa6";
-import {
-  MdOutlinePlaylistAdd,
-  MdOutlinePlaylistAddCheck,
-} from "react-icons/md";
 import {
   IMAGE_BASE_URL,
   MOVIE_GENRES,
@@ -17,190 +10,18 @@ import {
   TV_GENERES,
 } from "~/lib/constants";
 import { useListIds } from "~/providers/media-provider";
-import { api } from "~/trpc/react";
+import Favorite from "./favorite";
+import MyList from "./mylist";
+import WatchList from "./watch-list";
 
 type Props = { media: Media };
 
 export default function MovieCard({ media }: Props) {
-  const [listIds, setListIds] = useListIds();
-  const { mutate: addToListMutate } = api.media.addToMyList.useMutation();
-  const { mutate: watchListMutate } = api.media.addToWatchList.useMutation();
-  const { mutate: favoritesMutate } = api.media.addToFavorites.useMutation();
-  const { mutate: removeMyListMutate } =
-    api.media.removeFromMyList.useMutation();
-  const { mutate: removeWatchListMutate } =
-    api.media.removeFromWatchList.useMutation();
-  const { mutate: removeFavoriteMutate } =
-    api.media.removeFromFavorites.useMutation();
+  const [listIds] = useListIds();
   const isFavorite = listIds.favoriteIds.includes(media.id);
   const isInMyList = listIds.mylistIds.includes(media.id);
   const isInWatchList = listIds.watchListIds.includes(media.id);
   const pathname = usePathname();
-
-  function handleLike() {
-    favoritesMutate(
-      { media },
-      {
-        onSuccess: (mediaId) => {
-          if (mediaId) {
-            setListIds((prevState) => ({
-              ...prevState,
-              favoriteIds: [...prevState.favoriteIds, mediaId],
-            }));
-            toast.success(
-              `${media.media_type === "tv" ? "Series" : "Movie"} added to your Favorites`,
-            );
-          }
-        },
-        onError: (error) => {
-          const code = error.data?.code;
-          if (code === "CONFLICT" || code === "INTERNAL_SERVER_ERROR") {
-            toast.error(error.message);
-          } else {
-            toast.error("Some Error Occured. Please Try Again");
-          }
-        },
-      },
-    );
-  }
-
-  function handleRemoveLike() {
-    removeFavoriteMutate(
-      { mediaId: media.id },
-      {
-        onSuccess: (mediaId) => {
-          if (mediaId) {
-            setListIds((prevState) => ({
-              ...prevState,
-              favoriteIds: prevState.favoriteIds.filter((id) => id !== mediaId),
-            }));
-          }
-          toast.success(
-            `${media.media_type === "tv" ? "Series" : "Movie"} Removed From your Favorites`,
-          );
-        },
-        onError: (error) => {
-          const code = error.data?.code;
-          if (code === "CONFLICT" || code === "INTERNAL_SERVER_ERROR") {
-            toast.error(error.message);
-          } else {
-            toast.error("Some Error Occured. Please Try Again");
-          }
-        },
-      },
-    );
-  }
-
-  function handleAddToList() {
-    addToListMutate(
-      { media },
-      {
-        onSuccess: (mediaId) => {
-          if (mediaId) {
-            setListIds((prevState) => ({
-              ...prevState,
-              mylistIds: [...prevState.mylistIds, mediaId],
-            }));
-          }
-
-          toast.success(
-            `${media.media_type === "tv" ? "Series" : "Movie"} added to your List`,
-          );
-        },
-        onError: (error) => {
-          const code = error.data?.code;
-          if (code === "CONFLICT" || code === "INTERNAL_SERVER_ERROR") {
-            toast.error(error.message);
-          } else {
-            toast.error("Some Error Occured. Please Try Again");
-          }
-        },
-      },
-    );
-  }
-
-  function handleRemoveFromList() {
-    removeMyListMutate(
-      { mediaId: media.id },
-      {
-        onSuccess: (mediaId) => {
-          if (mediaId) {
-            setListIds((prevState) => ({
-              ...prevState,
-              mylistIds: prevState.mylistIds.filter((id) => id !== mediaId),
-            }));
-          }
-          toast.success(
-            `${media.media_type === "tv" ? "Series" : "Movie"} Removed From your List`,
-          );
-        },
-        onError: (error) => {
-          const code = error.data?.code;
-          if (code === "CONFLICT" || code === "INTERNAL_SERVER_ERROR") {
-            toast.error(error.message);
-          } else {
-            toast.error("Some Error Occured. Please Try Again");
-          }
-        },
-      },
-    );
-  }
-
-  function handleAddToWatchList() {
-    watchListMutate(
-      { media },
-      {
-        onSuccess: (mediaId) => {
-          if (mediaId) {
-            setListIds((prevState) => ({
-              ...prevState,
-              watchListIds: [...prevState.watchListIds, mediaId],
-            }));
-          }
-          toast.success(
-            `${media.media_type === "tv" ? "Series" : "Movie"} added to your Watch List`,
-          );
-        },
-        onError: (error) => {
-          const code = error.data?.code;
-          if (code === "CONFLICT" || code === "INTERNAL_SERVER_ERROR") {
-            toast.error(error.message);
-          } else {
-            toast.error("Some Error Occured. Please Try Again");
-          }
-        },
-      },
-    );
-  }
-
-  function handleRemoveFromWatchList() {
-    removeWatchListMutate(
-      { mediaId: media.id },
-      {
-        onSuccess: (mediaId) => {
-          if (mediaId) {
-            setListIds((prevState) => ({
-              ...prevState,
-              watchListIds: prevState.watchListIds.filter(
-                (id) => id !== mediaId,
-              ),
-            }));
-          }
-          toast.success(
-            `${media.media_type === "tv" ? "Series" : "Movie"} Removed From Watch List`,
-          );
-        },
-        onError: (error) => {
-          const code = error.data?.code;
-          if (code === "CONFLICT" || code === "INTERNAL_SERVER_ERROR") {
-            toast.error(error.message);
-          } else {
-            toast.error("Some Error Occured. Please Try Again");
-          }
-        },
-      },
-    );
-  }
 
   if (pathname === ROUTES.MY_LIST && !isInMyList) {
     return null;
@@ -262,27 +83,13 @@ export default function MovieCard({ media }: Props) {
           </Link>
           <div className="flex gap-1.5">
             <div className="flex cursor-pointer items-center justify-center rounded-full border border-foreground p-1">
-              {isFavorite ? (
-                <AiFillLike onClick={handleRemoveLike} />
-              ) : (
-                <AiOutlineLike onClick={handleLike} />
-              )}
+              <Favorite media={media} />
             </div>
             <div className="flex cursor-pointer items-center justify-center rounded-full border border-foreground p-1">
-              {isInMyList ? (
-                <FaCheck onClick={handleRemoveFromList} />
-              ) : (
-                <FaPlus onClick={handleAddToList} />
-              )}
+              <MyList media={media} />
             </div>
             <div className="flex cursor-pointer items-center justify-center rounded-full border border-foreground p-1">
-              {isInWatchList ? (
-                <MdOutlinePlaylistAddCheck
-                  onClick={handleRemoveFromWatchList}
-                />
-              ) : (
-                <MdOutlinePlaylistAdd onClick={handleAddToWatchList} />
-              )}
+              <WatchList media={media} />
             </div>
           </div>
         </div>
