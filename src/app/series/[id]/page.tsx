@@ -42,12 +42,11 @@ export default async function Series({ params }: Props) {
       </main>
     );
   }
-  const { media } = data;
 
   return (
     <main className="min-h-screen justify-center bg-background scrollbar-track-background">
       <Navbar />
-      <MovieDetail media={media} />
+      <MovieDetail media={data.media} />
     </main>
   );
 }
