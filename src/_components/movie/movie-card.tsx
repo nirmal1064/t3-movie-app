@@ -1,6 +1,7 @@
 "use client";
 import { type Media } from "@prisma/client";
 import Image from "next/image";
+import Link from "next/link";
 import { usePathname } from "next/navigation";
 import toast from "react-hot-toast";
 import { AiFillLike, AiOutlineLike } from "react-icons/ai";
@@ -248,9 +249,17 @@ export default function MovieCard({ media }: Props) {
           ))}
         </p>
         <div className="mt-2 flex items-center justify-between px-1 text-2xl">
-          <button className="rounded-lg bg-red-500 px-3 py-0.5 text-lg">
-            Watch Trailer
-          </button>
+          <Link
+            href={
+              media.media_type === "tv"
+                ? `/series/${media.id}`
+                : `/movie/${media.id}`
+            }
+          >
+            <button className="rounded-lg bg-red-500 px-3 py-0.5 text-lg">
+              More Info
+            </button>
+          </Link>
           <div className="flex gap-1.5">
             <div className="flex cursor-pointer items-center justify-center rounded-full border border-foreground p-1">
               {isFavorite ? (
