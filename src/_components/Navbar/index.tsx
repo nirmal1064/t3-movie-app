@@ -23,7 +23,6 @@ export default function Navbar() {
 
   function handleSearch(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    console.log(searchValue);
     if (searchValue.length < 2) {
       return;
     }

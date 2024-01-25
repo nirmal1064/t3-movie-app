@@ -11,6 +11,7 @@ import WatchList from "./watch-list";
 type Props = { media: TMDBApiMedia };
 
 export default async function MovieDetail({ media }: Props) {
+  console.log(media);
   const genres = media.genres as unknown as GenreType[];
   const session = await getServerAuthSession();
   let mediaIds: ListIdsType = {
@@ -122,9 +123,9 @@ export default async function MovieDetail({ media }: Props) {
                 <span>
                   {LIST_FORMATTER.format(
                     media.credits.crew
-                      .slice(0, 5)
                       .filter((c) => c.job === "Director")
-                      .map((c) => c.name),
+                      .map((c) => c.name)
+                      .slice(0, 5),
                   )}
                 </span>
               </p>
@@ -132,7 +133,7 @@ export default async function MovieDetail({ media }: Props) {
           </div>
           {session?.user && (
             <MediaProvider mediaIds={mediaIds}>
-              <div className="flex justify-center gap-2 md:justify-normal">
+              <div className="flex justify-center gap-5 md:justify-normal md:gap-2">
                 <div className="flex cursor-pointer items-center justify-center rounded-full border border-foreground p-1">
                   <Favorite media={media} className="h-8 w-8" />
                 </div>

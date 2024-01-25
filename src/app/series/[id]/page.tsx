@@ -1,6 +1,6 @@
 import { type Metadata } from "next";
 import Navbar from "~/_components/Navbar";
-import MovieDetail from "~/_components/movie/movie-detail";
+import MediaDetail from "~/_components/movie/media-detail";
 import { env } from "~/env";
 import { type ApiErrorResponse, type TMDBApiMedia } from "~/types";
 
@@ -55,7 +55,7 @@ export default async function Series({ params }: Props) {
   return (
     <main className="min-h-screen justify-center bg-background scrollbar-track-background">
       <Navbar />
-      <MovieDetail media={data.media} />
+      <MediaDetail media={data.media} />
     </main>
   );
 }

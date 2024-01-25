@@ -1,6 +1,6 @@
 import { type Metadata } from "next";
 import Navbar from "~/_components/Navbar";
-import MovieDetail from "~/_components/movie/movie-detail";
+import MediaDetail from "~/_components/movie/media-detail";
 import { env } from "~/env";
 import { YT_WATCH_URL } from "~/lib/constants";
 import { type ApiErrorResponse, type TMDBApiMedia } from "~/types";
@@ -67,7 +67,7 @@ export default async function Movie({ params }: Props) {
   return (
     <main className="min-h-screen justify-center bg-background scrollbar-track-background">
       <Navbar />
-      <MovieDetail media={media} />
+      <MediaDetail media={media} />
     </main>
   );
 }

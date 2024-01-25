@@ -25,7 +25,6 @@ export default function Auth() {
   const [loading, setLoading] = useState(false);
 
   function handleRegister() {
-    console.log("Registering");
     setLoading(true);
     mutate(
       { email, name, password },

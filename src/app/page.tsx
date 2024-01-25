@@ -30,7 +30,6 @@ async function getTrendingMovies() {
 
 export default async function Home() {
   const session = await getServerAuthSession();
-  console.log(session?.user);
   if (!session?.user) {
     redirect("/api/auth/signin");
   }
