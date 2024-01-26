@@ -13,6 +13,7 @@ import { useListIds } from "~/providers/media-provider";
 import Favorite from "./favorite";
 import MyList from "./mylist";
 import WatchList from "./watch-list";
+import React from "react";
 
 type Props = { media: Media };
 
@@ -22,6 +23,7 @@ export default function MovieCard({ media }: Props) {
   const isInMyList = listIds.mylistIds.includes(media.id);
   const isInWatchList = listIds.watchListIds.includes(media.id);
   const pathname = usePathname();
+  console.log(media.title, media.first_air_date, media.last_air_date);
 
   if (pathname === ROUTES.MY_LIST && !isInMyList) {
     return null;
@@ -33,6 +35,19 @@ export default function MovieCard({ media }: Props) {
 
   if (pathname === ROUTES.FAVORITES && !isFavorite) {
     return null;
+  }
+
+  function DisplayYear() {
+    if (media.media_type === "movie" && media.release_date) {
+      return `(${media.release_date.slice(0, 4)})`;
+    } else if (media.media_type === "tv" && media.first_air_date) {
+      const startYear = media.first_air_date.slice(0, 4);
+      const endYear = media.last_air_date
+        ? media.last_air_date.slice(0, 4)
+        : "";
+      return `(${startYear}-${endYear})`;
+    }
+    return "";
   }
 
   return (
@@ -47,21 +62,27 @@ export default function MovieCard({ media }: Props) {
         width={320}
         height={450}
       />
-      <div className="flex h-full flex-col justify-between gap-1 pb-1 text-foreground">
+      <div className="line-clamp-1 flex h-full flex-col justify-between gap-1 pb-1 text-foreground">
         <div className="flex items-center gap-1">
           <h2
             className="line-clamp-1 cursor-default px-1 text-xl font-semibold"
             title={media.title ?? media.name ?? undefined}
           >
-            {media.title ?? media.name}{" "}
-            {media.release_date && `(${media.release_date.slice(0, 4)})`}
+            {media.title ?? media.name} <DisplayYear />
+            {/* {media.release_date && `(${media.release_date.slice(0, 4)})`} */}
+            {/* {!media.release_date &&
+              media.first_air_date &&
+              `(${media.first_air_date.slice(0, 4)}-`}
+            {media.last_air_date
+              ? `${media.last_air_date})`
+              : !media.release_date && ")"} */}
           </h2>
         </div>
-        <p className="line-clamp-1 flex flex-wrap gap-1 px-1">
+        <p className="flex gap-1 text-ellipsis px-1">
           {media.genre_ids?.slice(0, 3).map((genreId) => (
             <span
               key={genreId}
-              className="rounded-sm bg-purple-500 px-1 py-0.5 text-sm"
+              className="whitespace-nowrap rounded-sm bg-purple-500 px-1 py-0.5 text-sm"
             >
               {media.media_type === "movie"
                 ? MOVIE_GENRES.find((genre) => genre.id === genreId)?.name

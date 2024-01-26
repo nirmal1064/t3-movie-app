@@ -27,13 +27,20 @@ export default async function MovieDetail({ media }: Props) {
     mediaIds = await api.media.getListIds.query();
   }
 
+  const mediaTitle =
+    media.title ??
+    media.name ??
+    media.original_title ??
+    media.original_name ??
+    undefined;
+
   return (
     <section className="flex w-full flex-col gap-4 pt-16 md:px-20">
-      <div className="mx-auto flex flex-col justify-center gap-4 md:flex-row">
+      <div className="flex flex-col justify-between gap-4 md:flex-row">
         <Image
-          className="mx-auto justify-center object-cover transition-all hover:scale-105 md:justify-normal"
+          className="mx-auto object-cover transition-all hover:scale-105"
           src={`${IMAGE_BASE_URL}${media?.poster_path ?? media.backdrop_path}`}
-          alt={media.original_title ?? media.title ?? media.name ?? ""}
+          alt={mediaTitle ?? ""}
           priority
           width={300}
           height={450}
@@ -41,15 +48,19 @@ export default async function MovieDetail({ media }: Props) {
         <div className="flex flex-1 flex-col gap-3 p-2 md:p-0">
           <div className="flex max-w-fit flex-col">
             <h1
-              className="cursor-default text-4xl font-semibold"
-              title={media.title ?? media.name ?? undefined}
+              className="cursor-default text-3xl font-semibold md:text-4xl"
+              title={mediaTitle}
             >
-              {media.title ?? media.name}
+              {mediaTitle}
+              {media.original_title &&
+                media.original_title !== mediaTitle &&
+                ` (${media.original_title})`}
+              {media.original_name &&
+                media.original_name !== mediaTitle &&
+                ` (${media.original_name})`}
             </h1>
             {media.tagline && (
-              <h3 className="text-center text-muted-foreground">
-                {media.tagline}
-              </h3>
+              <h3 className="text-muted-foreground">{media.tagline}</h3>
             )}
           </div>
           <p className="flex gap-2 text-muted-foreground">

@@ -32,7 +32,7 @@ export default function Navbar() {
   return (
     <>
       <nav
-        className={`fixed left-0 top-0 z-50 mx-auto w-full bg-background px-4 shadow-md md:px-[90px]`}
+        className={`fixed left-0 top-0 z-50 mx-auto w-full bg-background px-4 shadow-md md:px-20`}
       >
         <div className="flex items-center justify-between p-2 md:gap-1">
           <Link href={"/"}>
