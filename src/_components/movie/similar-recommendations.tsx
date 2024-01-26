@@ -30,10 +30,7 @@ export default function SimilarOrRecommendedMedia({ mediaList, title }: Props) {
                   <Image
                     key={media.id}
                     src={`https://image.tmdb.org/t/p/w220_and_h330_face${media?.poster_path}`}
-                    //   src={`https://image.tmdb.org/t/p/w342${media.profile_path}`}
-                    alt={
-                      media.original_title ?? media.title ?? media.name ?? ""
-                    }
+                    alt={media.original_title ?? media.title ?? media.name}
                     width={220}
                     height={330}
                     objectFit="cover"
@@ -41,6 +38,11 @@ export default function SimilarOrRecommendedMedia({ mediaList, title }: Props) {
                   <p title={media.title ?? media.original_title ?? media.name}>
                     {media.title ?? media.original_title ?? media.name}
                   </p>
+                  {media.release_date && (
+                    <p className="text-sm text-muted-foreground">
+                      {media.release_date.slice(0, 4)}
+                    </p>
+                  )}
                 </Link>
               </div>
             ))}
