@@ -33,7 +33,7 @@ async function getSeriesById(id: string) {
       return { success: false };
     }
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return { success: false };
   }
 }

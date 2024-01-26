@@ -23,7 +23,6 @@ export default function MovieCard({ media }: Props) {
   const isInMyList = listIds.mylistIds.includes(media.id);
   const isInWatchList = listIds.watchListIds.includes(media.id);
   const pathname = usePathname();
-  console.log(media.title, media.first_air_date, media.last_air_date);
 
   if (pathname === ROUTES.MY_LIST && !isInMyList) {
     return null;
