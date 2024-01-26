@@ -33,7 +33,7 @@ export default async function Search({ searchParams }: Props) {
   const data = await searchMovies(q as string);
 
   return (
-    <main className="min-h-screen justify-center bg-background scrollbar-track-background">
+    <main className="container min-h-screen bg-background scrollbar-track-background">
       <Navbar />
       <MovieGrid media={data.results} />
     </main>

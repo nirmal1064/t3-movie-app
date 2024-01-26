@@ -149,16 +149,12 @@ export const TV_GENERES = [
 
 export const NAV_ITEMS = [
   { label: "Trending", href: "/trending" },
-  { label: "Popular", href: "/popular" },
   { label: "My List", href: "/mylist" },
   { label: "Watch List", href: "/watchlist" },
   { label: "Favorites", href: "/favorites" },
 ];
 
-export const DEFAULT_NAV_ITEMS = [
-  { label: "Trending", href: "/trending" },
-  { label: "Popular", href: "/popular" },
-];
+export const DEFAULT_NAV_ITEMS = [{ label: "Trending", href: "/trending" }];
 
 export const AUTH_NAV_ITEMS = [
   ...DEFAULT_NAV_ITEMS,

@@ -25,7 +25,7 @@ export default function CastCrewList({ castOrCrews, title }: Props) {
                   alt="Alt"
                   width={138}
                   height={170}
-                  objectFit="cover"
+                  style={{ objectFit: "cover" }}
                 />
                 <p title={castOrCrew.name}>{castOrCrew.name}</p>
                 {"character" in castOrCrew && (

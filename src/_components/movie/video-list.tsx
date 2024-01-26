@@ -29,7 +29,7 @@ export default function VideoList({ videos }: Props) {
                   alt={video.name}
                   width={320}
                   height={240}
-                  objectFit="cover"
+                  style={{ objectFit: "cover" }}
                 />
                 <SiYoutube
                   className="absolute left-1/2 top-1/2 h-10 w-10 translate-x-[-50%] translate-y-[-50%]"

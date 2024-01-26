@@ -17,7 +17,7 @@ export default function ImageList({ images }: Props) {
             alt="Alt"
             width={320}
             height={180}
-            objectFit="cover"
+            style={{ objectFit: "cover" }}
           />
         ))}
       </div>

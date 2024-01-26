@@ -7,15 +7,22 @@ import { getServerAuthSession } from "~/server/auth";
 import { type TrendingResponseType } from "~/types";
 
 async function getTrendingMovies() {
-  const type = Math.random() < 0.5 ? "movie" : "tv";
+  const dayOrWeek = Math.random() < 0.5 ? "day" : "week";
+  const pageNo = Math.floor(Math.random() * 10);
   try {
-    const url = `${TMDB_BASE_URL}/${type}/popular?api_key=${env.TMDB_API_KEY}`;
-    const response = await fetch(url);
+    const url = `${TMDB_BASE_URL}/trending/all/${dayOrWeek}?page=${pageNo}`;
+    const options: RequestInit = {
+      method: "GET",
+      headers: {
+        accept: "application/json",
+        Authorization: `Bearer ${env.TMDB_ACCESS_TOKEN}`,
+      },
+    };
+    const response = await fetch(url, options);
     const data = (await response.json()) as TrendingResponseType;
-    data.results = data.results.map((media) => ({
-      ...media,
-      media_type: type,
-    }));
+    data.results = data.results.filter(
+      (r) => r.media_type === "tv" || r.media_type === "movie",
+    );
     return data;
   } catch (error) {
     console.error(error);

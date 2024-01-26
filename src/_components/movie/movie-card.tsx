@@ -57,7 +57,7 @@ export default function MovieCard({ media }: Props) {
             {media.release_date && `(${media.release_date.slice(0, 4)})`}
           </h2>
         </div>
-        <p className="flex flex-wrap gap-1 px-1">
+        <p className="line-clamp-1 flex flex-wrap gap-1 px-1">
           {media.genre_ids?.slice(0, 3).map((genreId) => (
             <span
               key={genreId}

@@ -33,7 +33,7 @@ export default function SimilarOrRecommendedMedia({ mediaList, title }: Props) {
                     alt={media.original_title ?? media.title ?? media.name}
                     width={220}
                     height={330}
-                    objectFit="cover"
+                    style={{ objectFit: "cover" }}
                   />
                   <p title={media.title ?? media.original_title ?? media.name}>
                     {media.title ?? media.original_title ?? media.name}
