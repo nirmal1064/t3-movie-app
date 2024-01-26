@@ -34,6 +34,19 @@ export default async function MovieDetail({ media }: Props) {
     media.original_name ??
     undefined;
 
+  function DisplayYear() {
+    if (media.media_type === "movie" && media.release_date) {
+      return `${media.release_date.slice(0, 4)}`;
+    } else if (media.media_type === "tv" && media.first_air_date) {
+      const startYear = media.first_air_date.slice(0, 4);
+      const endYear = media.last_air_date
+        ? media.last_air_date.slice(0, 4)
+        : "";
+      return `(${startYear}-${endYear})`;
+    }
+    return "";
+  }
+
   return (
     <section className="flex w-full flex-col gap-4 pt-16 md:px-20">
       <div className="flex flex-col justify-between gap-4 md:flex-row">
@@ -65,17 +78,20 @@ export default async function MovieDetail({ media }: Props) {
           </div>
           <p className="flex gap-2 text-muted-foreground">
             <span>{media.media_type === "tv" ? "TV" : "Movie"}</span>
-            {media.release_date && (
+            <DisplayYear />
+            {/* {media.release_date && (
               <span>{`${media.release_date.slice(0, 4)}`}</span>
             )}
             {media.media_type === "tv" && (
               <>
                 <span>
-                  {media.first_air_date.slice(0, 4)}-
-                  {media.last_air_date.slice(0, 4)}
+                  ({media.first_air_date?.slice(0, 4)}-
+                  {media.last_air_date?.slice(0, 4)})
                 </span>
-                <span>{media.number_of_seasons} Seasons</span>
               </>
+            )} */}
+            {media.number_of_seasons && (
+              <span>{media.number_of_seasons} Seasons</span>
             )}
             {media.runtime && <span>{media.runtime} mins</span>}
           </p>
