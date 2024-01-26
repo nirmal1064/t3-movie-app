@@ -26,7 +26,7 @@ async function getMovieById(id: string) {
         Authorization: `Bearer ${env.TMDB_ACCESS_TOKEN}`,
       },
     };
-    const url = `https://api.themoviedb.org/3/movie/${id}?append_to_response=images,videos,credits`;
+    const url = `https://api.themoviedb.org/3/movie/${id}?append_to_response=images,videos,credits,similar,recommendations`;
     const response = await fetch(url, options);
     const media = (await response.json()) as TMDBApiMedia | ApiErrorResponse;
     if ("id" in media) {

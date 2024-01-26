@@ -3,15 +3,18 @@ import { IMAGE_BASE_URL, LIST_FORMATTER, USD_FORMATTER } from "~/lib/constants";
 import MediaProvider from "~/providers/media-provider";
 import { getServerAuthSession } from "~/server/auth";
 import { api } from "~/trpc/server";
-import { type ListIdsType, type GenreType, type TMDBApiMedia } from "~/types";
+import { type GenreType, type ListIdsType, type TMDBApiMedia } from "~/types";
 import Favorite from "./favorite";
+import ImageList from "./image-list";
 import MyList from "./mylist";
 import WatchList from "./watch-list";
+import VideoList from "./video-list";
+import CastCrewList from "./cast-crew-list";
+import SimilarOrRecommendedMedia from "./similar-recommendations";
 
 type Props = { media: TMDBApiMedia };
 
 export default async function MovieDetail({ media }: Props) {
-  console.log(media);
   const genres = media.genres as unknown as GenreType[];
   const session = await getServerAuthSession();
   let mediaIds: ListIdsType = {
@@ -25,8 +28,8 @@ export default async function MovieDetail({ media }: Props) {
   }
 
   return (
-    <section className="w-full gap-4 pt-16">
-      <div className="mx-auto flex flex-col justify-center gap-4 md:flex-row md:pl-20">
+    <section className="flex w-full flex-col gap-4 pt-16 md:px-20">
+      <div className="mx-auto flex flex-col justify-center gap-4 md:flex-row">
         <Image
           className="mx-auto justify-center object-cover transition-all hover:scale-105 md:justify-normal"
           src={`${IMAGE_BASE_URL}${media?.poster_path ?? media.backdrop_path}`}
@@ -147,8 +150,20 @@ export default async function MovieDetail({ media }: Props) {
             </MediaProvider>
           )}
         </div>
-        <div className="pb-16 md:pb-0"></div>
       </div>
+      <ImageList images={media.images.backdrops} />
+      <CastCrewList castOrCrews={media.credits?.cast ?? []} title="Cast" />
+      <CastCrewList castOrCrews={media.credits?.crew ?? []} title="Crew" />
+      <VideoList videos={media.videos.results} />
+      <SimilarOrRecommendedMedia
+        title={`More Like this ${media.media_type === "tv" ? "Show" : "Movie"}`}
+        mediaList={media.similar?.results ?? []}
+      />
+      <SimilarOrRecommendedMedia
+        title={`Recommended ${media.media_type === "tv" ? "Shows" : "Movies"}`}
+        mediaList={media.recommendations?.results ?? []}
+      />
+      <div className="pb-16 md:pb-0"></div>
     </section>
   );
 }

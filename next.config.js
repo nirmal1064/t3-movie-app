@@ -8,9 +8,8 @@ await import("./src/env.js");
 const config = {
   images: {
     remotePatterns: [
-      {
-        hostname: "image.tmdb.org",
-      },
+      { hostname: "image.tmdb.org" },
+      { hostname: "i.ytimg.com" },
     ],
   },
 };
