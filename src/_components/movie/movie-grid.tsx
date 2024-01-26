@@ -1,8 +1,8 @@
 import { type Media } from "@prisma/client";
-import MovieCard from "./movie-card";
-import { api } from "~/trpc/server";
 import MediaProvider from "~/providers/media-provider";
 import { getServerAuthSession } from "~/server/auth";
+import { api } from "~/trpc/server";
+import MovieCard from "./movie-card";
 
 type Props = { media: Media[] };
 

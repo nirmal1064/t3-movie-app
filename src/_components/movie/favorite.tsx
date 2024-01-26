@@ -69,8 +69,16 @@ export default function Favorite({ media, className }: Props) {
   }
 
   return isFavorite ? (
-    <AiFillLike onClick={handleRemoveLike} className={className} />
+    <AiFillLike
+      onClick={handleRemoveLike}
+      className={className}
+      title="Remove From Favorites"
+    />
   ) : (
-    <AiOutlineLike onClick={handleLike} className={className} />
+    <AiOutlineLike
+      onClick={handleLike}
+      className={className}
+      title="Add to Favorites"
+    />
   );
 }

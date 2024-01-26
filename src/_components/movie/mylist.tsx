@@ -70,8 +70,16 @@ export default function MyList({ media, className }: Props) {
   }
 
   return isInMyList ? (
-    <FaCheck onClick={handleRemoveFromList} className={className} />
+    <FaCheck
+      onClick={handleRemoveFromList}
+      className={className}
+      title="Remove From My List"
+    />
   ) : (
-    <FaPlus onClick={handleAddToList} className={className} />
+    <FaPlus
+      onClick={handleAddToList}
+      className={className}
+      title="Add to My List"
+    />
   );
 }

@@ -1,45 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
+import { SiYoutube } from "react-icons/si";
 import { ScrollArea, ScrollBar } from "~/components/ui/scroll-area";
 import { type VideoType } from "~/types";
-import { SiYoutube } from "react-icons/si";
 
 type Props = { videos: VideoType[] };
-
-// export default function VideoList({ videos }: Props) {
-//   if (videos.length === 0) return null;
-
-//   return (
-//     <>
-//       <h2></h2>
-//       <ScrollArea className="w-full whitespace-nowrap">
-//         <div className="flex flex-nowrap gap-3">
-//           {videos
-//             .filter((video) => video.site === "YouTube")
-//             .map((video) => (
-//               <div key={video.key} className="h-auto w-fit">
-//                 <Link
-//                   key={video.key}
-//                   href={`https://www.youtube.com/watch?v=${video.key}`}
-//                   className="relative"
-//                 >
-//                   <Image
-//                     src={`https://i.ytimg.com/vi/${video.key}/hqdefault.jpg`}
-//                     alt={video.name}
-//                     width={320}
-//                     height={180}
-//                     objectFit="cover"
-//                   />
-//                   <SiYoutube />
-//                 </Link>
-//               </div>
-//             ))}
-//         </div>
-//         <ScrollBar orientation="horizontal" />
-//       </ScrollArea>
-//     </>
-//   );
-// }
 
 export default function VideoList({ videos }: Props) {
   if (videos.length === 0) return null;

@@ -4,13 +4,13 @@ import MediaProvider from "~/providers/media-provider";
 import { getServerAuthSession } from "~/server/auth";
 import { api } from "~/trpc/server";
 import { type GenreType, type ListIdsType, type TMDBApiMedia } from "~/types";
+import CastCrewList from "./cast-crew-list";
 import Favorite from "./favorite";
 import ImageList from "./image-list";
 import MyList from "./mylist";
-import WatchList from "./watch-list";
-import VideoList from "./video-list";
-import CastCrewList from "./cast-crew-list";
 import SimilarOrRecommendedMedia from "./similar-recommendations";
+import VideoList from "./video-list";
+import WatchList from "./watch-list";
 
 type Props = { media: TMDBApiMedia };
 

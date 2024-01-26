@@ -21,16 +21,18 @@ export default function CastCrewList({ castOrCrews, title }: Props) {
               >
                 <Image
                   key={castOrCrew.id}
-                  // src={`https://image.tmdb.org/t/p/w138_and_h175_face${castOrCrew.profile_path}`}
                   src={`https://image.tmdb.org/t/p/w342${castOrCrew.profile_path}`}
                   alt="Alt"
                   width={138}
                   height={170}
                   objectFit="cover"
                 />
-                <p>{castOrCrew.name}</p>
+                <p title={castOrCrew.name}>{castOrCrew.name}</p>
                 {"character" in castOrCrew && (
-                  <p className="text-xs text-muted-foreground">
+                  <p
+                    className="text-xs text-muted-foreground"
+                    title={castOrCrew.character}
+                  >
                     {castOrCrew.character}
                   </p>
                 )}

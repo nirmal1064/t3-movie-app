@@ -77,11 +77,13 @@ export default function WatchList({ media, className }: Props) {
     <MdOutlinePlaylistAddCheck
       onClick={handleRemoveFromWatchList}
       className={className}
+      title="Remove From WatchList"
     />
   ) : (
     <MdOutlinePlaylistAdd
       onClick={handleAddToWatchList}
       className={className}
+      title="Add to WatchList"
     />
   );
 }
