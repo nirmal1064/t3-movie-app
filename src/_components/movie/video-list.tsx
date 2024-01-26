@@ -31,7 +31,10 @@ export default function VideoList({ videos }: Props) {
                   height={240}
                   objectFit="cover"
                 />
-                <SiYoutube className="absolute left-1/2 top-1/2 z-50 h-10 w-10 translate-x-[-50%] translate-y-[-50%]" />
+                <SiYoutube
+                  className="absolute left-1/2 top-1/2 h-10 w-10 translate-x-[-50%] translate-y-[-50%]"
+                  fill="red"
+                />
               </Link>
             ))}
         </div>
