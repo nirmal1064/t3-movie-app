@@ -5,24 +5,24 @@ generator client {
     provider = "prisma-client-js"
 }
 
-generator zod {
-    provider         = "zod-prisma-types"
-    // output           = "../src/types/zod-prisma-types"
-    useMultipleFiles = false
-    writeBarrelFiles = false
-    createModelTypes = false
-    createInputTypes = true // default is true
-    // addInputTypeValidation           = true // default is true
-    // addIncludeType                   = false // default is true
-    // addSelectType                    = false // default is true
-    // validateWhereUniqueInput         = false // default is true
-    // createOptionalDefaultValuesTypes = true // default is false
-    // createRelationValuesTypes        = true // default is false
-    // createPartialTypes               = false // default is false
-    // useDefaultValidators             = false // default is true
-    // coerceDate                       = false // default is true
-    // writeNullishInModelTypes         = true // default is false
-}
+// generator zod {
+//     provider         = "zod-prisma-types"
+//     // output           = "../src/types/zod-prisma-types"
+//     useMultipleFiles = false
+//     writeBarrelFiles = false
+//     createModelTypes = false
+//     createInputTypes = true // default is true
+//     // addInputTypeValidation           = true // default is true
+//     // addIncludeType                   = false // default is true
+//     // addSelectType                    = false // default is true
+//     // validateWhereUniqueInput         = false // default is true
+//     // createOptionalDefaultValuesTypes = true // default is false
+//     // createRelationValuesTypes        = true // default is false
+//     // createPartialTypes               = false // default is false
+//     // useDefaultValidators             = false // default is true
+//     // coerceDate                       = false // default is true
+//     // writeNullishInModelTypes         = true // default is false
+// }
 
 datasource db {
     provider = "mongodb"
