@@ -79,17 +79,6 @@ export default async function MovieDetail({ media }: Props) {
           <p className="flex gap-2 text-muted-foreground">
             <span>{media.media_type === "tv" ? "TV" : "Movie"}</span>
             <DisplayYear />
-            {/* {media.release_date && (
-              <span>{`${media.release_date.slice(0, 4)}`}</span>
-            )}
-            {media.media_type === "tv" && (
-              <>
-                <span>
-                  ({media.first_air_date?.slice(0, 4)}-
-                  {media.last_air_date?.slice(0, 4)})
-                </span>
-              </>
-            )} */}
             {media.number_of_seasons && (
               <span>{media.number_of_seasons} Seasons</span>
             )}
@@ -113,13 +102,13 @@ export default async function MovieDetail({ media }: Props) {
                 {media.release_date}
               </p>
             )}
-            {media.budget && (
+            {media.budget !== undefined && media.budget > 0 && (
               <p>
                 <span className="text-muted-foreground">Budget: </span>
                 {USD_FORMATTER.format(media.budget)}
               </p>
             )}
-            {media.revenue && (
+            {media.revenue !== undefined && media.revenue > 0 && (
               <p>
                 <span className="text-muted-foreground">Box Office: </span>
                 {USD_FORMATTER.format(media.revenue)}
