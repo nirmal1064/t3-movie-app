@@ -102,6 +102,18 @@ export default async function MovieDetail({ media }: Props) {
                 {media.release_date}
               </p>
             )}
+            {media.first_air_date && (
+              <p>
+                <span className="text-muted-foreground">First Episode: </span>
+                {media.first_air_date}
+              </p>
+            )}
+            {media.last_air_date && (
+              <p>
+                <span className="text-muted-foreground">Last Episode: </span>
+                {media.last_air_date}
+              </p>
+            )}
             {media.budget !== undefined && media.budget > 0 && (
               <p>
                 <span className="text-muted-foreground">Budget: </span>
