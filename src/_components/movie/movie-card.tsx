@@ -13,7 +13,6 @@ import { useListIds } from "~/providers/media-provider";
 import Favorite from "./favorite";
 import MyList from "./mylist";
 import WatchList from "./watch-list";
-import React from "react";
 
 type Props = { media: Media };
 
@@ -54,12 +53,12 @@ export default function MovieCard({ media }: Props) {
       className={`flex h-auto w-[320px] select-none flex-col gap-2 rounded-lg bg-movie shadow-2xl`}
     >
       <Image
-        className="rounded-lg object-cover transition-all hover:scale-105"
+        className="h-[480px] w-full rounded-lg object-cover transition-all hover:scale-105"
         src={`${IMAGE_BASE_URL}${media?.poster_path ?? media.backdrop_path}`}
         alt={media.original_title ?? media.title ?? media.name ?? ""}
         priority
         width={320}
-        height={450}
+        height={480}
       />
       <div className="line-clamp-1 flex h-full flex-col justify-between gap-1 pb-1 text-foreground">
         <div className="flex items-center gap-1">
@@ -68,13 +67,6 @@ export default function MovieCard({ media }: Props) {
             title={media.title ?? media.name ?? undefined}
           >
             {media.title ?? media.name} <DisplayYear />
-            {/* {media.release_date && `(${media.release_date.slice(0, 4)})`} */}
-            {/* {!media.release_date &&
-              media.first_air_date &&
-              `(${media.first_air_date.slice(0, 4)}-`}
-            {media.last_air_date
-              ? `${media.last_air_date})`
-              : !media.release_date && ")"} */}
           </h2>
         </div>
         <p className="flex gap-1 text-ellipsis px-1">
